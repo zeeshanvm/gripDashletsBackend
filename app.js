@@ -1,49 +1,17 @@
-'use strict';
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+var express = require('./core/server/config/express'),
+    conf = require('./core/server/config/config'),
+    mongoose = require('./core/server/config/mongoose'),
+    winston = require('./core/server/config/winston'),
+    chalk =require('chalk');
 
-/**
- * Module dependencies.
- */
-var express = require('express');
-var fs = require('fs');
-var app = express();
-/**
- * Main application entry file.
- * Please note that the order of loading is important.
- */
+//passport = require('./core/server/config/passport');
+var db = mongoose();
 
-// Load Configurations
-var config = require('./core/server/config/config');
-var winston = require('./core/server/config/winston');
+var app = express(db);
+app.listen(conf.port);
+winston.info(chalk.blue('Express app started on port ' + conf.port));
 
-winston.info('Starting ' + config.app.name + '...');
-winston.info('Config loaded: ' + config.NODE_ENV);
-winston.debug('Accepted Config:', config);
-
-global.appBaseUrl = config.app.appBaseUrl || "http://localhost:3000/";
-
-var db = require('./core/server/config/sequelize');
-var passport = require('./core/server/config/passport');
-var mongoose = require('./core/server/config/mongoose');
-
-var app = express();
-
-//Initialize Express
-console.log('port', config.PORT)
-var expresss = require('./core/server/config/express')(app, passport);
-
-
-//Start the app by listening on <port>
-console.log(config.PORT);
-var server = app.listen(config.PORT);
-
-winston.info('Express app started on port ' + config.PORT);
-
-//expose app
 module.exports = app;
 
-// mongoose.connect(function(db) {
-//     // mongoose.loadModels();
-//
-//
-//
-// });
+
