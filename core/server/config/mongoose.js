@@ -11,10 +11,11 @@ var _ = require('lodash');
 var config = require('./config');
 var winston = require('./winston');
 var _glob = require('glob');
-var moment = require('moment');
+var moment = require('moment'),
+chalk = require('chalk') ;
 
 winston.info('Initializing MongoDB...');
-module.exports = function(){
+module.exports = function () {
     mongoose.set('debug', true);
     var db = mongoose.connect(config.db);
 
@@ -23,15 +24,14 @@ module.exports = function(){
         winston.info('database is connected');
     });
     // Load Model Files Here
-    winston.info('Scanning Models files:');
+    winston.info(chalk.green('Loading  Models files ...'));
     var models = _glob.sync('**/server/models/*.mongo.model.js');
-    console.log(models);
     models.forEach(function (filePath) {
 
-        require('../../../'+filePath);
+        require('../../../' + filePath);
         winston.info('loading model', filePath.split('/')[3]);
     });
-    winston.info('Scanning Models Complete :' + moment().format('hh:mm:ss:SSS'));
+    winston.info(chalk.green('Models loaded Successfully'));
 
     return db;
 };

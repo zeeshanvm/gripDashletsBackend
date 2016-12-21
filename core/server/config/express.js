@@ -1,4 +1,4 @@
-'use strict'; //NOSONAR
+'use strict';
 var winston = require('winston');
 const favicon = require('express-favicon');
 var express = require('express'),
@@ -6,7 +6,10 @@ var express = require('express'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override'),
-    session = require('express-session');
+    session = require('express-session'),
+    passport = require('passport'),
+    flash = require('flash');
+
 
 var config = require('./config');
 
@@ -16,7 +19,7 @@ module.exports = function (db) {
     if (process.env.NODE_ENV === 'development') {
         app.use(morgan('dev'));
         winston.info('NODE_ENV Dev Env Loaded');
-        winston.info(config);
+        // winston.info(config);
 
     } else if (process.env.NODE_ENV === 'production') {
         app.use(compress());
@@ -34,10 +37,18 @@ module.exports = function (db) {
         rolling: true
     }));
 
+    app.set('views', './views');
+    app.set('view engine', 'ejs');
+
+    app.use(flash());
+    app.use(passport.initialize());
+    app.use(passport.session());
+    
+    require('./routes')(app);
 
     app.use(favicon(__dirname + '/../../client/favicon.png'));
-    app.get('/',function (req,res) {
-        res.send("Welcome to MixPanel");
+    app.get('/', function (req, res) {
+        res.render('index');
     });
 
     return server;
