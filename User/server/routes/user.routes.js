@@ -1,5 +1,6 @@
 var passport = require('passport'),
-    config = require('../../../core/server/config/config');
+    config = require('../../../core/server/config/config'),
+    userController = require('../controllers/user.controller');
 
 
 function userManagementRoutes(app) {
@@ -13,10 +14,7 @@ function userManagementRoutes(app) {
         }));
     app.post('/auth/facebook/token',
         passport.authenticate('facebook-token'),
-        function (req, res) {
-            // do something with req.user
-            res.send(req.user? 200 : 401);
-        }
+        userController.facebookLogin
     );
 
 }

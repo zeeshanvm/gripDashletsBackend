@@ -12,7 +12,7 @@ module.exports = function () {
             passReqToCallback: true
         },
         function (req, accessToken, refreshToken, profile, done) {
-            winston.log("=================================  LoggedIN");
+          
             done();
         }))
 };

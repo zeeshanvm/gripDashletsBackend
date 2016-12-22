@@ -10,7 +10,7 @@ var db = mongoose();
 
 var app = express(db);
 app.listen(conf.port);
-winston.info(chalk.blue('Express app started on port ' + conf.port));
+winston.info(chalk.yellow('Express app started on port ' + conf.port));
 
 module.exports = app;
 
