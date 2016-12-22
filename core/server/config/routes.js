@@ -5,9 +5,9 @@ var chalk = require('chalk');
 
 module.exports = function (app) {
 
-    winston.info(chalk.red('Load Routes files....'));
-    var models = _glob.sync('**/server/routes/*.routes.js');
-    models.forEach(function (filePath) {
+    winston.info(chalk.red('Loading Routes files....'));
+    var routes = _glob.sync('**/server/routes/*.routes.js');
+    routes.forEach(function (filePath) {
         require('../../../' + filePath)(app);
         winston.info('loading Route file', filePath.split('/')[3]);
     });

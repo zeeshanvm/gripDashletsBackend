@@ -1,41 +1,27 @@
-/**
- * Created by Asif on 3/12/2016.
- */
+var mongoose = require('mongoose'),
+    winston = require('winston'),
+    chalk = require('chalk'),
+    _glob = require('glob');
 
-'use strict'; //NOSONAR
-
-var fs = require('fs');
-var path = require('path');
-var mongoose = require('mongoose');
-var _ = require('lodash');
 var config = require('./config');
-var winston = require('./winston');
-var _glob = require('glob');
-var moment = require('moment'),
-chalk = require('chalk') ;
 
-winston.info('Initializing MongoDB...');
 module.exports = function () {
-    mongoose.set('debug', true);
-    var db = mongoose.connect(config.db);
-
-    mongoose.connection.on('error', console.error.bind({console: 'db connecton error'}));
-    mongoose.connection.once('open', function () {
-        winston.info('database is connected');
+    var connect = mongoose.connect(config.db);
+    var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function () {
+        // we're connected!
+        winston.info(chalk.green("Database Connected"));
     });
-    // Load Model Files Here
-    winston.info(chalk.green('Loading  Models files ...'));
+    db.on('disconnected', function () {
+        winston.info(chalk.red("Database Disconnected"));
+    });
+    winston.info(chalk.red('Loading Models files....'));
     var models = _glob.sync('**/server/models/*.mongo.model.js');
     models.forEach(function (filePath) {
-
         require('../../../' + filePath);
-        winston.info('loading model', filePath.split('/')[3]);
+        winston.info('loading Route file', filePath.split('/')[3]);
     });
-    winston.info(chalk.green('Models loaded Successfully'));
-
-    return db;
+    winston.info(chalk.green('Loading Models Complete '));
+     return connect;
 };
-
-
-
-
