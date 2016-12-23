@@ -7,15 +7,32 @@ function userManagementRoutes(app) {
     app.get('/oauth/facebook', passport.authenticate('facebook', {
         failureRedirect: '/signin'
     }));
+
     app.get('/oauth/facebook/callback', passport.authenticate('facebook',
         {
             failureRedirect: '/signin',
             successRedirect: '/'
         }));
-    app.post('/auth/facebook/token',
+
+    // access_token , refresh_token are required in body
+    app.post(config.api+'/auth/facebook/token',
         passport.authenticate('facebook-token'),
         userController.facebookLogin
     );
+
+
+    // access_token , refresh_token  in body
+    app.post(config.api+'/auth/google/token', passport.authenticate('google-token'),
+        function(req, res) {
+            res.send(req.user);
+        });
+
+    app.post(config.api+'/login',
+        passport.authenticate('local', { failureRedirect: '/login' }),
+        function(req, res) {
+            res.redirect('/');
+        });
+    app.post(config.api+'/signUp',userController.Signup)
 
 }
 
