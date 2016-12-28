@@ -24,6 +24,7 @@ module.exports = function (db) {
     } else if (process.env.NODE_ENV === 'production') {
         app.use(compress());
     }
+  
 
     app.use(bodyParser.urlencoded({
         extended: true

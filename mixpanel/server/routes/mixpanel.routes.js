@@ -11,5 +11,4 @@ function fetchData(app) {
 module.exports = function (app) {
     fetchData(app);
     return app;
-
 };

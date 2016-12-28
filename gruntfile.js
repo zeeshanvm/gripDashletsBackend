@@ -12,9 +12,13 @@ module.exports = function (grunt) {
                     reporter: require('jshint-stylish')
                 }
             },
+            test :{
+                all:['']
+            }
 
         });
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.grunt.registerTask('runTest', ['env:test','test']);
 
     //Load NPM tasks
 
