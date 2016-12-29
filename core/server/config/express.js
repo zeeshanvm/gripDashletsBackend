@@ -49,7 +49,7 @@ module.exports = function (db) {
 
     app.use(favicon(__dirname + '/../../client/favicon.png'));
     app.get('/', function (req, res) {
-        res.render('index');
+        res.send("Welcome to Grip dashletic");
     });
 
     return server;

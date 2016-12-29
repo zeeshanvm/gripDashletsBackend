@@ -8,6 +8,14 @@ function facebookLogin(req, res) {
 
 };
 
+function googleLogin(req, res,next) {
+
+    console.log(typeof  req.body);
+    console.log(  req.body);
+    next();
+
+};
+
 
 function Signup(req, res) {
 
@@ -41,5 +49,6 @@ function sendErroneousResponse(res, data) {
 
 module.exports = {
     facebookLogin: facebookLogin,
-    Signup: Signup
+    Signup: Signup,
+    googleLogin: googleLogin
 };
