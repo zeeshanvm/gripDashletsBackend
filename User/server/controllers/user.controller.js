@@ -1,6 +1,8 @@
 var promise = require('bluebird'),
     StandardError = require('standard-error');
-userHelper = require('../helpers/user.helper');
+var userHelper = require('../helpers/user.helper');
+    
+
 
 
 function facebookLogin(req, res) {
@@ -9,9 +11,6 @@ function facebookLogin(req, res) {
 };
 
 function googleLogin(req, res,next) {
-
-    console.log(typeof  req.body);
-    console.log(  req.body);
     next();
 
 };

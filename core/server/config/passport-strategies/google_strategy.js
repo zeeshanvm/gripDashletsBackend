@@ -6,7 +6,7 @@ var passport = require('passport');
 module.exports = function () {
     passport.use(new GoogleTokenStrategy({
             clientID: "954209047151-k2itmgrcphucvb497mbgv106ab9sddlf.apps.googleusercontent.com",
-            clientSecret: "GOOGLE_CLIENT_SECRET"
+            clientSecret: "0rC_kr4pGosF7tAyU6GLKOtA"
         },
         function(accessToken, refreshToken, profile, done) {
             console.log("Helllo");

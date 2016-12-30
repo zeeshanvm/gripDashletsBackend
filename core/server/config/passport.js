@@ -7,7 +7,8 @@ var winston = require('./winston');
 module.exports = function () {
     //Serialize sessions
     passport.serializeUser(function (user, done) {
-        return done(null, user.id);
+        
+        return done(null, user.email);
 
     });
 
@@ -27,7 +28,7 @@ module.exports = function () {
     // require('./passport-strategies/facebook_strategy')();
     require('./passport-strategies/facebook_token_strategy')();
     require('./passport-strategies/gmail_token_strategy')();
-    require('./passport-strategies/google_strategy')();
+    // require('./passport-strategies/google_strategy')();
 };
 
 

@@ -4,17 +4,18 @@ var GoogleTokenStrategy = require('passport-google-id-token'),
 var passport = require('passport');
 
 
-
-
 module.exports = function () {
-    console.log("==============>");
-    passport.use(new GoogleTokenStrategy({
-            clientID: '954209047151-k2itmgrcphucvb497mbgv106ab9sddlf.apps.googleusercontent.com'
-            // getGoogleCerts: {}
-        },
-        function(parsedToken, googleId, done) {
 
-            done(err);
+
+    passport.use(new GoogleTokenStrategy({
+            clientID: config.clientID
+        },
+        function (parsedToken, googleId, done) {
+            console.log("===========>",parsedToken);
+            var user = {
+                email : parsedToken.payload.email
+            };
+            done(null, user);
 
         }
     ));

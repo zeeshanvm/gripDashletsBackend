@@ -1,6 +1,8 @@
 var passport = require('passport'),
     config = require('../../../core/server/config/config'),
-    userController = require('../controllers/user.controller');
+    userController = require('../controllers/user.controller'),
+    coreMiddleware = require('../../../core/server/middlewares/core.middleware');
+
     
 
 
@@ -23,7 +25,7 @@ function userManagementRoutes(app) {
 
 
     // access_token , refresh_token  in body
-    app.post(config.api+'/auth/google/token',userController.googleLogin, passport.authenticate('google-id-token'),
+    app.post('/auth/google',coreMiddleware.setClientID, passport.authenticate('google-id-token'),
         function(req, res) {
             res.send(req.user);
         });
@@ -34,10 +36,6 @@ function userManagementRoutes(app) {
             res.redirect('/');
         });
 
-    app.post('/auth/google/token', passport.authenticate('google-token'),
-        function(req, res) {
-            res.send(req.user);
-        });
     app.post(config.api+'/signUp',userController.Signup)
 
 }
