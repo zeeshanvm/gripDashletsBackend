@@ -1,23 +1,37 @@
-var MixpanelExport = require('mixpanel-data-export-node');
+var mixpanelHelper = require('../helpers/mixpanel.helpers');
+var promise = require('bluebird');
+var standardError = require('standard-error');
 
 
-function fetchMixpanelData (req,res){
-    var panel = new MixpanelExport({
-        api_key: "cb27bc2651bedeb233d2a07cb502712a",
-        api_secret: "1cc0531a4b11d6b5b028cac63fe7c59f"
+function fetchMixpanelData(req, res) {
+
+    mixpanelHelper.fetchMixpanelData(req).then(function (data) {
+        sendResponse(res,data)
+    }).catch(function (err) {
+        sendErroneousResponse(res,err)
     });
-    panel.export({
-        from_date: "2016-12-01",
-        to_date: "2016-12-22"
+}
 
-    }).then(function(data) {
-        console.log(data);
-    });
-    res.send("OK");
+function sendResponse(res,data) {
+res.send({
+    status:"Success",
+    msgCode:405,
+    msgInfo:data
+
+})
+}
+
+function sendErroneousResponse(res,data) {
+    new promise.reject(new StandardError({
+        status:"Error",
+        msgCode:data.code,
+        msgInfo:data.info
+    }));
+
 }
 
 
 module.exports = {
-  
-    fetchMixpanelData : fetchMixpanelData
+
+    fetchMixpanelData: fetchMixpanelData
 };

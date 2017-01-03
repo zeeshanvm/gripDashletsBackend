@@ -1,22 +1,24 @@
 //
 //
 // var mongoose = require('mongoose');
+// var Schema = mongoose.Schema;
 //
-// var userSchema = mongoose.Schema({
+// var mixpanelSchema = mongoose.Schema({
 //
 //     User :{
 //         type: Schema.Types.ObjectId,
 //         ref : 'User'
 //     },
-//     EventName: {
+//     unique_name : {
+//      type:String
 //     },
-//     email : {
-//         type:String
-//     },
-//     widgets :[ ]
-//
-//
+//     sub_widgets :[],
+//     dashboard : {
+//         type: Schema.Types.ObjectId,
+//         ref : 'Dashboard'
+//     }
+//   
 // });
 //
-// mongoose.model('Mixpanel',userSchema);
+// mongoose.model('Mixpanel',mixpanelSchema);
 //
