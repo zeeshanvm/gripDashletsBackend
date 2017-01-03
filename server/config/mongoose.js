@@ -17,7 +17,7 @@ module.exports = function () {
         winston.info(chalk.red("Database Disconnected"));
     });
     winston.info(chalk.red('Loading Models files....'));
-    var models = _glob.sync('**/server/models/*.mongo.model.js');
+    var models = _glob.sync('../models/*.mongo.model.js');
     models.forEach(function (filePath) {
         require('../../../' + filePath);
         winston.info('loading Route file', filePath.split('/')[3]);

@@ -9,6 +9,7 @@ module.exports = function () {
             clientSecret: config.facebook.clientSecret
         },
         function (accessToken, refreshToken, profile, done) {
+            console.log('=======>',profile);
             //TODO    use session managment
             done(null, profile);
 

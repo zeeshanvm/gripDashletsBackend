@@ -46,9 +46,7 @@ module.exports = function (db) {
     app.use(passport.session());
     
     require('./routes')(app);
-
-    app.use(favicon(__dirname + '/../../client/favicon.png'));
-    app.get('/', function (req, res) {
+   app.get('/', function (req, res) {
         res.send("Welcome to Grip dashletic");
     });
 
